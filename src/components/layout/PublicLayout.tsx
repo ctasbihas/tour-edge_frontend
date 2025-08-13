@@ -3,9 +3,9 @@ import Navbar from "./Navbar";
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<main>
+		<main className="flex flex-col min-h-screen">
 			<Navbar />
-			{children}
+			<div className="flex-grow container mx-auto">{children}</div>
 			<Footer />
 		</main>
 	);

@@ -28,7 +28,7 @@ const Footer = () => {
 		},
 	];
 	return (
-		<footer className="bg-primary-foreground">
+		<footer>
 			<div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
 				<div className="flex justify-center items-center text-teal-600">
 					<Logo />
