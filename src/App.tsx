@@ -1,8 +1,11 @@
+import { Outlet } from "react-router";
+import PublicLayout from "./components/layout/PublicLayout";
+
 function App() {
 	return (
-		<main>
-			<h1>This is the main component</h1>
-		</main>
+		<PublicLayout>
+			<Outlet />
+		</PublicLayout>
 	);
 }
 
