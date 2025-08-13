@@ -11,14 +11,12 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import { Link } from "react-router";
 import { ModeToggle } from "./ModeToggle";
 
-// Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-	{ href: "#", label: "Home", active: true },
-	{ href: "#", label: "Features" },
-	{ href: "#", label: "Pricing" },
-	{ href: "#", label: "About" },
+	{ href: "/", label: "Home" },
+	{ href: "/about", label: "About" },
 ];
 
 export default function Navbar() {
@@ -75,11 +73,12 @@ export default function Navbar() {
 												className="w-full"
 											>
 												<NavigationMenuLink
-													href={link.href}
-													className="py-1.5"
-													active={link.active}
+													asChild
+													className="py-1.5 block"
 												>
-													{link.label}
+													<Link to={link.href}>
+														{link.label}
+													</Link>
 												</NavigationMenuLink>
 											</NavigationMenuItem>
 										))}
@@ -90,12 +89,7 @@ export default function Navbar() {
 					</div>
 					{/* Main nav */}
 					<div className="flex items-center gap-6">
-						<a
-							href="#"
-							// className="text-primary hover:text-primary/90"
-						>
-							<Logo />
-						</a>
+						<Logo />
 						{/* Navigation menu */}
 						<NavigationMenu className="h-full *:h-full max-md:hidden">
 							<NavigationMenuList className="h-full gap-2">
@@ -105,11 +99,12 @@ export default function Navbar() {
 										className="h-full"
 									>
 										<NavigationMenuLink
-											active={link.active}
-											href={link.href}
 											className="text-muted-foreground hover:text-primary border-b-primary hover:border-b-primary data-[active]:border-b-primary h-full justify-center rounded-none border-y-2 border-transparent py-1.5 font-medium hover:bg-transparent data-[active]:bg-transparent!"
+											asChild
 										>
-											{link.label}
+											<Link to={link.href}>
+												{link.label}
+											</Link>
 										</NavigationMenuLink>
 									</NavigationMenuItem>
 								))}
@@ -121,18 +116,9 @@ export default function Navbar() {
 				<div className="flex items-center gap-2">
 					<Button
 						asChild
-						variant="ghost"
-						size="sm"
 						className="text-sm"
 					>
-						<a href="#">Sign In</a>
-					</Button>
-					<Button
-						asChild
-						size="sm"
-						className="text-sm"
-					>
-						<a href="#">Get Started</a>
+						<Link to="/login">Login</Link>
 					</Button>
 					<ModeToggle />
 				</div>
