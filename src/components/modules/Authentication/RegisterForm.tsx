@@ -9,6 +9,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -52,6 +53,7 @@ const formSchema = z
 type FormValues = z.infer<typeof formSchema>;
 
 const RegisterForm = () => {
+	const [register] = useRegisterMutation();
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -64,9 +66,12 @@ const RegisterForm = () => {
 	});
 
 	const onSubmit = async (data: FormValues) => {
-		// TODO: Add register API
-		console.log("Form submitted:", data);
-		form.reset();
+		try {
+			const result = await register(data).unwrap();
+			console.log("Registration successful:", result);
+		} catch (error) {
+			console.error("Registration failed:", error);
+		}
 	};
 
 	return (
