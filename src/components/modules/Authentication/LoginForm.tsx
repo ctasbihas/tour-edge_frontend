@@ -9,35 +9,22 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import { z } from "zod";
 import SocialButtons from "./SocialLoginButtons";
 
+const formSchema = z.object({
+	email: z.email().min(1, "Email is required"),
+	password: z
+		.string({ error: "Password is required" })
+		.min(8, "Password must be at least 8 characters long"),
+});
+
 const LoginForm = () => {
-	const formSchema = z.object({
-		email: z
-			.string()
-			.min(1, "Email is required")
-			.email("Invalid email format"),
-		password: z
-			.string({ error: "Password is required" })
-			.min(8, "Password must be at least 8 characters long")
-			.regex(/^(?=.*[a-z])/, {
-				message: "Password must contain at least one lowercase letter",
-			})
-			.regex(/^(?=.*[A-Z])/, {
-				message: "Password must contain at least one uppercase letter",
-			})
-			.regex(/^(?=.*[!@#$%^&*()])/, {
-				message:
-					"Password must contain at least one special character (!@#$%^&*())",
-			})
-			.regex(/^(?=.*\d)/, {
-				message: "Password must contain at least one number",
-			}),
-	});
+	const [login] = useLoginMutation();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -46,8 +33,14 @@ const LoginForm = () => {
 			password: "",
 		},
 	});
-	const onSubmit = (data: z.infer<typeof formSchema>) => {
-		console.log("Form submitted:", data);
+	const onSubmit = async (data: z.infer<typeof formSchema>) => {
+		try {
+			const result = await login(data).unwrap();
+
+			console.log(result);
+		} catch (error) {
+			console.error("Login failed:", error);
+		}
 	};
 	return (
 		<>
