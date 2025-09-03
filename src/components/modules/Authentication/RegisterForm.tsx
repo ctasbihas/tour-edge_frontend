@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { z } from "zod";
 import SocialButtons from "./SocialLoginButtons";
 
@@ -54,6 +55,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 const RegisterForm = () => {
 	const [register] = useRegisterMutation();
+	const navigate = useNavigate();
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -69,6 +71,7 @@ const RegisterForm = () => {
 		try {
 			const result = await register(data).unwrap();
 			console.log("Registration successful:", result);
+			navigate("/verify-email", { state: { email: result.data.email } });
 		} catch (error) {
 			console.error("Registration failed:", error);
 		}

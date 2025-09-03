@@ -70,6 +70,7 @@ const SocialButtons = () => {
 				<Link
 					to={currentPage === "/login" ? "/register" : "/login"}
 					className="underline underline-offset-4"
+					viewTransition
 				>
 					Sign {currentPage === "/login" ? "up" : "in"}
 				</Link>

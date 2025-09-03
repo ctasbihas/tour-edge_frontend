@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-	baseURL: "http://localhost:5000/api/v1",
+	baseURL: process.env.VITE_API_BASE_URL,
+	withCredentials: true,
 });
 
 // Add a request interceptor
